@@ -1,0 +1,45 @@
+Checks: '-*,readability-identifier-naming'
+FormatStyle: file
+
+CheckOptions:
+  # Types
+  readability-identifier-naming.NamespaceCase: CamelCase
+  readability-identifier-naming.ClassCase: CamelCase
+  readability-identifier-naming.StructCase: CamelCase
+  readability-identifier-naming.UnionCase: CamelCase
+  readability-identifier-naming.EnumCase: CamelCase
+  readability-identifier-naming.TypeAliasCase: CamelCase
+  readability-identifier-naming.TypedefCase: CamelCase
+  readability-identifier-naming.TypeTemplateParameterCase: CamelCase
+  readability-identifier-naming.ValueTemplateParameterCase: CamelCase
+  readability-identifier-naming.ConceptCase: CamelCase
+
+  # Functions
+  readability-identifier-naming.FunctionCase: camelBack
+  readability-identifier-naming.MethodCase: camelBack
+  readability-identifier-naming.IgnoreMainLikeFunctions: true
+
+  # Variables
+  readability-identifier-naming.VariableCase: lower_case
+  readability-identifier-naming.ParameterCase: lower_case
+  readability-identifier-naming.ParameterPackCase: lower_case
+  readability-identifier-naming.GlobalVariableCase: lower_case
+  readability-identifier-naming.GlobalVariablePrefix: g_
+
+  # Members
+  readability-identifier-naming.PublicMemberCase: lower_case
+  readability-identifier-naming.ProtectedMemberCase: lower_case
+  readability-identifier-naming.ProtectedMemberPrefix: m_
+  readability-identifier-naming.PrivateMemberCase: lower_case
+  readability-identifier-naming.PrivateMemberPrefix: m_
+  readability-identifier-naming.ClassMemberCase: lower_case
+
+  # Constants
+  readability-identifier-naming.ConstexprVariableCase: UPPER_CASE
+  readability-identifier-naming.GlobalConstantCase: UPPER_CASE
+  readability-identifier-naming.StaticConstantCase: UPPER_CASE
+  readability-identifier-naming.ClassConstantCase: UPPER_CASE
+  readability-identifier-naming.EnumConstantCase: CamelCase
+
+  # Macros
+  readability-identifier-naming.MacroDefinitionCase: UPPER_CASE

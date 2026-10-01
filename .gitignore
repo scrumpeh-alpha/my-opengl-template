@@ -1,0 +1,7 @@
+build/
+build-debug/
+build-release/
+.cache/
+compile_commands.json
+.idea/
+.vscode/
