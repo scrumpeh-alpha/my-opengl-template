@@ -51,6 +51,6 @@ inline constexpr std::array<uint32_t, 36> INDICES {
 };
 // clang-format on
 
-Mesh makeCube();
+Mesh makeCube(std::vector<Texture> textures = {});
 
 }  // namespace Primitives

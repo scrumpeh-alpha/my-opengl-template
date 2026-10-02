@@ -53,14 +53,22 @@ int App::init() {
     m_input_handler = std::make_unique<InputHandler>(m_window);
     m_input_handler->init();
 
-    m_camera = std::make_unique<Camera>((float)m_width / (float)m_height, Camera::WORLD_UP);
+    m_camera = std::make_unique<Camera>((float)m_width / (float)m_height);
     m_shader =
         std::make_unique<Shader>("../assets/shaders/shader.vert", "../assets/shaders/shader.frag");
 
     m_input_handler->setMouseCallback(
         [this](const MouseMoveEvent& e) { m_camera->processMouseMovement(e.delta.x, e.delta.y); });
 
-    m_cube = std::make_unique<Mesh>(Primitives::makeCube());
+    // TODO: better way
+    Texture tex {};
+    tex.loadFile("../assets/textures/container.jpg");
+
+    std::vector<Texture> textures;
+    textures.push_back(std::move(tex));
+
+    m_cube = std::make_unique<Mesh>(Primitives::makeCube(std::move(textures)));
+
     return 0;
 }
 

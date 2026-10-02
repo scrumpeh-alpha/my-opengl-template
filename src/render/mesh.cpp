@@ -37,6 +37,9 @@ void Mesh::render(const Shader& shader) const {
     shader.setMat4("u_model", m_model);
 
     for (size_t i = 0; i < m_textures.size(); i++) {
+        std::string name = "u_texture" + std::to_string(i);
+        shader.setInt(name, i);
+
         m_textures[i].bind(i);  // bind with texture unit
     }
 

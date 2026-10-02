@@ -3,13 +3,30 @@
 
 #include <string>
 
+struct TextureOptions {
+    GLint min_filter { GL_LINEAR_MIPMAP_LINEAR };
+    GLint mag_filter { GL_LINEAR_MIPMAP_LINEAR };
+    GLint wrap { GL_REPEAT };
+    GLenum data_type { GL_UNSIGNED_BYTE };
+    bool mipmap { true };
+    bool flip_vertical { true };
+
+    // need?
+    // bool s_rgb { false };
+};
+
 class Texture {
   private:
     GLuint m_id {};
+    GLuint m_target { GL_TEXTURE_2D };
     int m_width {}, m_height {};
 
   public:
-    Texture() { glGenTextures(1, &m_id); }
+    Texture(GLuint target = GL_TEXTURE_2D)
+        : m_target { target } {
+        glGenTextures(1, &m_id);
+    }
+
     ~Texture() { destroy(); }
 
     Texture(Texture&& t) noexcept
@@ -38,11 +55,16 @@ class Texture {
     Texture(const Texture&) = delete;
     Texture& operator=(const Texture&) = delete;
 
-    void loadFile(const std::string& file_name);
+    void loadFile(const std::string& file_name, const TextureOptions& opts = {});
     void bind(uint32_t unit = 0) const;
     void unbind() const;
     void destroy();
 
+    int id() const { return m_id; }
     int width() const { return m_width; }
     int height() const { return m_height; }
+
+  private:
+    void setParams(const TextureOptions& opts);
+
 };
