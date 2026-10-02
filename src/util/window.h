@@ -19,12 +19,12 @@ class Window {
 
     bool init();
 
-    bool shouldClose() { return glfwWindowShouldClose(m_handle); }
+    bool shouldClose() const { return glfwWindowShouldClose(m_handle); }
     void close() { glfwSetWindowShouldClose(m_handle, true); }
 
-    void swapBuffers() { glfwSwapBuffers(m_handle); }
+    void swapBuffers() const { glfwSwapBuffers(m_handle); }
 
-    GLFWwindow* handle() { return m_handle; }
-    int width() { return m_width; }
-    int height() { return m_height; }
+    GLFWwindow* handle() const { return m_handle; }
+    int width() const { return m_width; }
+    int height() const { return m_height; }
 };

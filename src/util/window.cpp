@@ -1,11 +1,15 @@
 #include "window.h"
 #include <iostream>
 
-Window::Window(std::string_view title, const int width, const int height) 
-: m_title { title }, m_width { width }, m_height { height } {}
+Window::Window(std::string_view title, const int width, const int height)
+    : m_title { title }, m_width { width }, m_height { height } {}
 
 bool Window::init() {
-    glfwInit();
+    if (!glfwInit()) {
+        std::cerr << "Failed to initialize GLFW\n";
+        return false;
+    }
+    // TODO: change OpenGL version here
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -41,5 +45,7 @@ bool Window::init() {
 }
 
 Window::~Window() {
+    if (m_handle)
+        glfwDestroyWindow(m_handle);
     glfwTerminate();
 }
