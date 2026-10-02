@@ -40,6 +40,8 @@ add_executable(${PROJECT_NAME}
     src/util/camera.h
     src/util/input_handler.cpp
     src/util/input_handler.h
+    src/util/window.cpp
+    src/util/window.h
 
     src/app.cpp
     src/app.h

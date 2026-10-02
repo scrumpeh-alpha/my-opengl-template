@@ -1,8 +1,8 @@
 #include "input_handler.h"
 
 void InputHandler::init() {
-    glfwSetWindowUserPointer(m_window, this);
-    glfwSetCursorPosCallback(m_window, [](GLFWwindow* window, double xpos_in, double ypos_in) {
+    glfwSetWindowUserPointer(m_window.handle(), this);
+    glfwSetCursorPosCallback(m_window.handle(), [](GLFWwindow* window, double xpos_in, double ypos_in) {
         auto input = static_cast<InputHandler*>(glfwGetWindowUserPointer(window));
         if (!input || !input->m_capture_mouse) {
             return;
@@ -24,7 +24,7 @@ void InputHandler::init() {
         input->m_mouse_callback(MouseMoveEvent { pos, delta });
     });
 
-    glfwSetKeyCallback(m_window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
+    glfwSetKeyCallback(m_window.handle(), [](GLFWwindow* window, int key, int scancode, int action, int mods) {
         auto input = static_cast<InputHandler*>(glfwGetWindowUserPointer(window));
         if (!input) {
             return;
@@ -33,9 +33,9 @@ void InputHandler::init() {
             input->m_capture_mouse = !input->m_capture_mouse;
             if (input->m_capture_mouse) {
                 input->m_first_mouse = true;
-                glfwSetInputMode(input->m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+                glfwSetInputMode(input->m_window.handle(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
             } else
-                glfwSetInputMode(input->m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+                glfwSetInputMode(input->m_window.handle(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         }
 
         KeyCode code = keyFromGLFW(key);

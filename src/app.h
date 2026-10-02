@@ -4,18 +4,14 @@
 #include "render/mesh.h"
 #include "util/input_handler.h"
 #include "util/camera.h"
+#include "util/window.h"
 
 #include <memory>
 #include <string>
 
 class App {
   private:
-    std::string m_title;
-    int m_width;
-    int m_height;
-
-    GLFWwindow* m_window { nullptr };
-
+    Window m_window;
     std::unique_ptr<InputHandler> m_input_handler;
 
     std::unique_ptr<Camera> m_camera;
@@ -27,15 +23,11 @@ class App {
 
   public:
     App(std::string_view title, int width, int height);
-    ~App();
 
-    App(const App& app) = delete;
-    App& operator=(const App& app) = delete;
+    App(const App&) = delete;
+    App& operator=(const App&) = delete;
 
     bool init();
     bool run(); // option to have return code later
-
-  private:
-    bool initGLFW();
 };
 

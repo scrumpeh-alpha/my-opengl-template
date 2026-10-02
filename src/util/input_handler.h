@@ -1,6 +1,7 @@
 #pragma once
 #include "../graphics/gfx.h"
 #include "glm/glm.hpp"
+#include "window.h"
 
 #include <array>
 #include <functional>
@@ -41,7 +42,7 @@ class InputHandler {
     std::array<KeyState, static_cast<size_t>(KeyCode::MaxKeycode)> m_prev_key_states {};
 
   private:
-    GLFWwindow* m_window { nullptr };
+    Window& m_window;
 
     glm::vec2 m_last_pos {};
     bool m_first_mouse { true };
@@ -50,7 +51,7 @@ class InputHandler {
     MouseCallback m_mouse_callback;
 
   public:
-    explicit InputHandler(GLFWwindow* window)
+    explicit InputHandler(Window& window)
         : m_window { window } {}
 
     void init();
