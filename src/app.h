@@ -1,7 +1,7 @@
 #pragma once
 #include "graphics/classes/shader.h"
 #include "graphics/gfx.h"
-#include "render/cube_mesh.h"
+#include "render/mesh.h"
 #include "util/input_handler.h"
 #include "util/camera.h"
 
@@ -21,7 +21,7 @@ class App {
     std::unique_ptr<Camera> m_camera;
     std::unique_ptr<Shader> m_shader;
 
-    std::unique_ptr<Cube> m_cube;
+    std::unique_ptr<Mesh> m_cube;
 
     float m_last_x {}, m_last_y {};
     bool m_first_mouse { false };

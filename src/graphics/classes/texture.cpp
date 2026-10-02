@@ -24,8 +24,9 @@ void Texture::loadFile(const std::string& file_name) {
     }
 }
 
-void Texture::bind() const {
+void Texture::bind(uint32_t unit) const {
     if (m_id != 0) {
+        glActiveTexture(GL_TEXTURE0 + unit);
         glBindTexture(GL_TEXTURE_2D, m_id);
     }
 }

@@ -39,7 +39,7 @@ class Texture {
     Texture& operator=(const Texture&) = delete;
 
     void loadFile(const std::string& file_name);
-    void bind() const;
+    void bind(uint32_t unit = 0) const;
     void unbind() const;
     void destroy();
 

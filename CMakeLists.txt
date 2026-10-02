@@ -31,7 +31,10 @@ add_executable(${PROJECT_NAME}
     src/graphics/classes/vao.h
     src/graphics/classes/vertex.h  
 
-    src/render/cube_mesh.h
+    src/render/mesh.cpp
+    src/render/mesh.h
+    src/render/primitives.cpp
+    src/render/primitives.h
 
     src/util/camera.cpp
     src/util/camera.h

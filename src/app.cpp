@@ -1,6 +1,8 @@
 #include "app.h"
 #include "GLFW/glfw3.h"
 
+#include "render/primitives.h"
+
 #include <iostream>
 #include <memory>
 
@@ -58,8 +60,7 @@ int App::init() {
     m_input_handler->setMouseCallback(
         [this](const MouseMoveEvent& e) { m_camera->processMouseMovement(e.delta.x, e.delta.y); });
 
-    m_cube = std::make_unique<Cube>();
-
+    m_cube = std::make_unique<Mesh>(Primitives::makeCube());
     return 0;
 }
 
@@ -94,8 +95,8 @@ int App::run() {
 
         m_cube->render(*m_shader);
 
-        // glEnable(GL_CULL_FACE);
-        // glFrontFace(GL_CCW);
+        glEnable(GL_CULL_FACE);
+        glFrontFace(GL_CCW);
 
         if (m_input_handler->isKeyPressed(KeyCode::Q)) {
             m_is_running = false;
