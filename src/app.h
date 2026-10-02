@@ -14,6 +14,7 @@ class App {
     Window m_window;
     std::unique_ptr<InputHandler> m_input_handler;
 
+    // TODO: proper scene management
     std::unique_ptr<Camera> m_camera;
     std::unique_ptr<Shader> m_shader;
 

@@ -18,13 +18,15 @@ bool App::init() {
     m_input_handler->init();
 
     m_camera = std::make_unique<Camera>((float)m_window.width() / (float)m_window.height());
+
+    // TODO: replace hardcoded paths
     m_shader =
         std::make_unique<Shader>("../assets/shaders/shader.vert", "../assets/shaders/shader.frag");
 
     m_input_handler->setMouseCallback(
         [this](const MouseMoveEvent& e) { m_camera->processMouseMovement(e.delta.x, e.delta.y); });
 
-    // TODO: better way
+    // TODO: paths + texture management with cache
     Texture tex {};
     tex.loadFile("../assets/textures/container.jpg");
 
