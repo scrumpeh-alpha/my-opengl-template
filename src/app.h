@@ -23,20 +23,19 @@ class App {
 
     std::unique_ptr<Mesh> m_cube;
 
-    float m_last_x {}, m_last_y {};
-    bool m_first_mouse { false };
-    bool m_capture_mouse { true };
-
     bool m_is_running { true };
 
   public:
     App(std::string_view title, int width, int height);
     ~App();
 
-    int run();
+    App(const App& app) = delete;
+    App& operator=(const App& app) = delete;
+
+    bool init();
+    bool run(); // option to have return code later
 
   private:
-    int initGLFW();
-    int init();
+    bool initGLFW();
 };
 

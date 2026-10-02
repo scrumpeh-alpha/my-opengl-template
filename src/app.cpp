@@ -8,11 +8,9 @@
 
 App::App(const std::string_view title, const int width, const int height)
     : m_title { title }, m_width { width }, m_height { height } {
-    initGLFW();
-    init();
 }
 
-int App::initGLFW() {
+bool App::initGLFW() {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
@@ -23,16 +21,15 @@ int App::initGLFW() {
 
     m_window = glfwCreateWindow(m_width, m_height, m_title.c_str(), nullptr, NULL);
     if (m_window == nullptr) {
-        std::cout << "Failed to create the GLFW window\n";
-        glfwTerminate();
-        return -1;
+        std::cerr << "Failed to create the window\n";
+        return false;
     }
 
     glfwMakeContextCurrent(m_window);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        std::cout << "Failed to initialize GLAD\n";
-        return -1;
+        std::cerr << "Failed to initialize GLAD\n";
+        return false;
     }
 
     if (glfwRawMouseMotionSupported())
@@ -44,12 +41,17 @@ int App::initGLFW() {
     glfwSetFramebufferSizeCallback(m_window, [](GLFWwindow* window, int width, int height) {
         glViewport(0, 0, width, height);
     });
-    glfwSwapInterval(true);
+    glfwSwapInterval(1);
 
-    return 0;
+    return true;
 }
 
-int App::init() {
+bool App::init() {
+    bool glfw_success = initGLFW();
+    if (!glfw_success) {
+        return false;
+    }
+
     m_input_handler = std::make_unique<InputHandler>(m_window);
     m_input_handler->init();
 
@@ -69,18 +71,20 @@ int App::init() {
 
     m_cube = std::make_unique<Mesh>(Primitives::makeCube(std::move(textures)));
 
-    return 0;
+    glEnable(GL_DEPTH_TEST);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glEnable(GL_CULL_FACE);
+    glFrontFace(GL_CCW);
+
+    return true;
 }
 
 App::~App() {
     glfwTerminate();
 }
 
-int App::run() {
+bool App::run() {
     auto last_frame = (float)glfwGetTime();
-
-    constexpr float TIMESTEP { 1.0f / 60.0f };
-    float accumulator { 0.0f };
 
     while (m_is_running && !glfwWindowShouldClose(m_window)) {
         auto current_frame = (float)glfwGetTime();
@@ -89,8 +93,6 @@ int App::run() {
 
         glfwPollEvents();  // poll inputs first
 
-        glEnable(GL_DEPTH_TEST);
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         m_camera->move(*m_input_handler, delta_time);
@@ -103,9 +105,6 @@ int App::run() {
 
         m_cube->render(*m_shader);
 
-        glEnable(GL_CULL_FACE);
-        glFrontFace(GL_CCW);
-
         if (m_input_handler->isKeyPressed(KeyCode::Q)) {
             m_is_running = false;
             glfwSetWindowShouldClose(m_window, true);
@@ -115,5 +114,5 @@ int App::run() {
         glfwSwapBuffers(m_window);
     }
 
-    return 0;
+    return true;
 }
